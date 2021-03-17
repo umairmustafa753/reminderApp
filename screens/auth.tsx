@@ -1,11 +1,22 @@
 import React, {useState} from 'react';
 import LoginScreen from 'react-native-login-screen';
 import {Text, View, Image, ScrollView} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
+import {NAVIGATIONS} from '../constants/navigator';
 import Styles from '../styles';
 
 const Auth = () => {
+  const navigator = useNavigation();
   const [spinnerVisibility, setSpinnerVisibility] = useState<boolean>(false);
+
+  const handleLogin = () => {
+    setSpinnerVisibility(true);
+    setTimeout(() => {
+      setSpinnerVisibility(false);
+    }, 2000);
+    navigator.navigate(NAVIGATIONS.DASHBOARD);
+  };
 
   const renderLogo = () => (
     <View style={Styles.logoConatiner}>
@@ -33,12 +44,7 @@ const Auth = () => {
         usernameOnChangeText={username => {}}
         onPressSettings={() => alert('Settings Button is pressed')}
         passwordOnChangeText={password => {}}
-        onPressLogin={() => {
-          setSpinnerVisibility(true);
-          setTimeout(() => {
-            setSpinnerVisibility(false);
-          }, 2000);
-        }}
+        onPressLogin={handleLogin}
         onPressSignup={() => {
           {
           }

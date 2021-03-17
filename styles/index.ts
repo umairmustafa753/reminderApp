@@ -46,6 +46,9 @@ const Styles = {
   backgroundColor: {
     backgroundColor: '#242424',
   },
+  loaderContent: {
+    color: '#FFF',
+  },
 };
 
 export default Styles;
