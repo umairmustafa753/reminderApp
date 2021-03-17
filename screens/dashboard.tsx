@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import {View} from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';

@@ -10,6 +10,7 @@ const Styles = {
   logoConatiner: {
     alignItems: 'center',
     justifyContent: 'center',
+    top: 50,
   },
   logoImage: {
     height: 200,
