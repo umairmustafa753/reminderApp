@@ -49,6 +49,11 @@ const Styles = {
   loaderContent: {
     color: '#FFF',
   },
+  actionButtonIcon: {
+    fontSize: 20,
+    height: 22,
+    color: 'white',
+  },
 };
 
 export default Styles;
