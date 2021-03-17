@@ -10,20 +10,11 @@ import Styles from '../styles';
 const Dashboard = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
-  const customStyle = {
-    hasEventCircle: {
-      backgroundColor: 'grey',
-    },
-    hasEventDaySelectedCircle: {
-      backgroundColor: 'red',
-    },
-  };
-
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 1000);
   }, []);
 
   return (
@@ -45,24 +36,17 @@ const Dashboard = () => {
           },
         }}
       />
-      <ActionButton buttonColor="rgba(231,76,60,1)">
+      <ActionButton
+        buttonColor="rgba(231,76,60,1)"
+        degrees={0}
+        renderIcon={() => {
+          return <Icon name="person-outline" style={Styles.actionButtonIcon} />;
+        }}>
         <ActionButton.Item
           buttonColor="#9b59b6"
-          title="New Task"
-          onPress={() => console.log('notes tapped!')}>
-          <Icon name="md-create" style={Styles.actionButtonIcon} />
-        </ActionButton.Item>
-        <ActionButton.Item
-          buttonColor="#3498db"
-          title="Notifications"
+          title="Edit Profile"
           onPress={() => {}}>
-          <Icon name="md-notifications-off" style={Styles.actionButtonIcon} />
-        </ActionButton.Item>
-        <ActionButton.Item
-          buttonColor="#1abc9c"
-          title="All Tasks"
-          onPress={() => {}}>
-          <Icon name="md-done-all" style={Styles.actionButtonIcon} />
+          <Icon name="md-pencil" style={Styles.actionButtonIcon} />
         </ActionButton.Item>
       </ActionButton>
     </>
