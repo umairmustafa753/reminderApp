@@ -5,14 +5,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {RootStackParamList} from './types';
 import StackScreens from './stack/index';
 
-export default function Navigation() {
-  return (
-    <NavigationContainer>
-      <RootNavigator />
-    </NavigationContainer>
-  );
-}
-
 const Stack = createStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
@@ -20,5 +12,13 @@ function RootNavigator() {
     <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name="Root" component={StackScreens} />
     </Stack.Navigator>
+  );
+}
+
+export default function Navigation() {
+  return (
+    <NavigationContainer>
+      <RootNavigator />
+    </NavigationContainer>
   );
 }
