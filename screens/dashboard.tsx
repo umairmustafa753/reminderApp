@@ -28,6 +28,10 @@ const Dashboard = () => {
     });
   };
 
+  const handleLogout = () => {
+    navigator.reset({routes: [{name: NAVIGATIONS.AUTH}]});
+  };
+
   return (
     <>
       <Spinner visible={loading} textStyle={Styles.loaderContent} />
@@ -56,6 +60,12 @@ const Dashboard = () => {
         renderIcon={() => {
           return <Icon name="person-outline" style={Styles.actionButtonIcon} />;
         }}>
+        <ActionButton.Item
+          buttonColor="#CA1C3B"
+          title="Log out"
+          onPress={handleLogout}>
+          <Icon name="log-out-outline" style={Styles.actionButtonIcon} />
+        </ActionButton.Item>
         <ActionButton.Item
           buttonColor="#9b59b6"
           title="Edit Profile"

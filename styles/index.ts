@@ -78,6 +78,10 @@ const Styles = {
   right10: {
     marginRight: 10,
   },
+  left5: {
+    marginLeft: 5,
+  },
+
   buttonBackground: {
     backgroundColor: '#1C70CA',
   },
@@ -87,6 +91,10 @@ const Styles = {
   },
   textCenter: {
     textAlign: 'center',
+  },
+  flatList: {
+    width: 60,
+    marginRight: 15,
   },
 };
 

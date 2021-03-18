@@ -19,6 +19,7 @@
     "react-native": "0.64.0",
     "react-native-action-button": "^2.8.5",
     "react-native-calendars": "^1.1254.0",
+    "react-native-date-picker": "^3.2.10",
     "react-native-elements": "^3.3.2",
     "react-native-fast-image": "^8.3.4",
     "react-native-gesture-handler": "^1.10.3",

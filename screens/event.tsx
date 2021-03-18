@@ -6,6 +6,7 @@ import FastImage from 'react-native-fast-image';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+import {NAVIGATIONS} from '../constants/navigator';
 import {remindersProps} from '../constants/types';
 import Styles from '../styles';
 
@@ -52,6 +53,10 @@ const Event = () => {
     navigator.dispatch(StackActions.popToTop());
   };
 
+  const handleAdd = () => {
+    navigator.navigate(NAVIGATIONS.CREATE);
+  };
+
   return (
     <ScrollView>
       <Header
@@ -91,13 +96,18 @@ const Event = () => {
                     <FastImage
                       style={Styles.fastImage}
                       source={{
-                        uri: 'https://unsplash.it/400/400?image=1',
+                        uri: u.avatar,
                         headers: {Authorization: 'someAuthToken'},
                         priority: FastImage.priority.normal,
                       }}
                       resizeMode={FastImage.resizeMode.contain}
                     />
-                    <Text style={Styles.username}>{u.name}</Text>
+                    <Text style={Styles.username}>
+                      {' '}
+                      {u.name.length > 15
+                        ? u.name.substring(0, 15) + '...'
+                        : u.name}
+                    </Text>
                   </View>
                 </>
               );
@@ -142,6 +152,7 @@ const Event = () => {
               style={Styles.right10}
             />
           }
+          onPress={handleAdd}
           title="Add Reminder"
         />
       </Card>
