@@ -10,11 +10,15 @@ const Styles = {
   logoConatiner: {
     alignItems: 'center',
     justifyContent: 'center',
-    top: 50,
   },
   logoImage: {
-    height: 200,
+    height: 150,
+    width: 150,
+  },
+  logoImageWithSelf: {
     width: 200,
+    height: 200,
+    alignSelf: 'center',
   },
   logoText: {
     color: '#fdfdfd',
@@ -54,6 +58,35 @@ const Styles = {
     fontSize: 20,
     height: 22,
     color: 'white',
+  },
+  fastImage: {
+    width: 60,
+    height: 60,
+    borderRadius: 100,
+  },
+  username: {
+    alignSelf: 'center',
+    marginLeft: 20,
+    fontSize: 20,
+  },
+  bottom20: {
+    marginBottom: 20,
+  },
+  Mbottom20: {
+    marginBottom: -20,
+  },
+  right10: {
+    marginRight: 10,
+  },
+  buttonBackground: {
+    backgroundColor: '#1C70CA',
+  },
+  cardView: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  textCenter: {
+    textAlign: 'center',
   },
 };
 

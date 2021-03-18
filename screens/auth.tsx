@@ -15,7 +15,7 @@ const Auth = () => {
     setTimeout(() => {
       setSpinnerVisibility(false);
     }, 2000);
-    navigator.navigate(NAVIGATIONS.DASHBOARD);
+    navigator.reset({routes: [{name: NAVIGATIONS.DASHBOARD}]});
   };
 
   const renderLogo = () => (
@@ -25,7 +25,6 @@ const Auth = () => {
         source={require('../assets/images/logo.png')}
         style={Styles.logoImage}
       />
-      <Text style={Styles.logoText}>My Reminders</Text>
     </View>
   );
 
