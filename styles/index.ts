@@ -1,4 +1,6 @@
-const Styles = {
+import {StyleSheet} from 'react-native';
+
+const Styles = StyleSheet.create({
   AuthContainer: {
     position: 'relative',
     alignSelf: 'center',
@@ -96,6 +98,6 @@ const Styles = {
     width: 60,
     marginRight: 15,
   },
-};
+});
 
 export default Styles;
