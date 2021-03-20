@@ -1,27 +1,83 @@
 import * as Google from "expo-google-app-auth";
+import firebase from "firebase";
 
 import ActionTypes from "../Actions/ActionTypes";
 import config from "../../config";
 
 const UserAction = {
-  LoginWithGoogle: () => {
+  LoginWithGmail: () => {
     return async (dispatch) => {
       dispatch({ type: ActionTypes.USER_REQUST, payload: {} });
       try {
-        const result = await Google.logInAsync({
-          androidClientId: config.ANDROIDCLIENTID,
-          iosClientId: config.IOSCLIENTID,
+        const user = await Google.logInAsync({
+          androidClientId: config.ANDROID_CLIENT_ID,
+          iosClientId: config.IOS_CLIENT_ID,
           behavior: "web",
           scopes: ["profile", "email"]
         });
 
-        if (result.type === "success") {
-          dispatch({ type: ActionTypes.USER, payload: result.accessToken });
+        if (user.type === "success") {
+          try {
+            const unsubscribe = firebase.auth().onAuthStateChanged(() => {
+              unsubscribe();
+              const credential = firebase.auth.GoogleAuthProvider.credential(
+                user?.idToken,
+                user?.accessToken
+              );
+
+              firebase
+                .auth()
+                .signInWithCredential(credential)
+                .then((result) => {
+                  let user = {
+                    gmail: result.user.email,
+                    profile_picture:
+                      result?.additionalUserInfo?.profile?.picture,
+                    first_name: result?.additionalUserInfo?.profile?.given_name,
+                    last_name: result?.additionalUserInfo?.profile?.family_name,
+                    created_at: Date.now(),
+                    last_logged_in: 0
+                  };
+                  if (result.additionalUserInfo?.isNewUser) {
+                    firebase
+                      .database()
+                      .ref("/users/" + result.user.uid)
+                      .set(user);
+                  } else {
+                    firebase
+                      .database()
+                      .ref("/users/" + result.user.uid)
+                      .update({
+                        last_logged_in: Date.now()
+                      });
+                    user.last_logged_in = Date.now();
+                  }
+                  dispatch({ type: ActionTypes.USER, payload: user });
+                })
+                .catch(() => {
+                  dispatch({
+                    type: ActionTypes.USER,
+                    payload: { message: "error on saving user to firebase" }
+                  });
+                });
+            });
+          } catch (e) {
+            dispatch({
+              type: ActionTypes.USER,
+              payload: { message: "error on saving user to firebase" }
+            });
+          }
         } else {
-          dispatch({ type: ActionTypes.USER, payload: { cancelled: true } });
+          dispatch({
+            type: ActionTypes.USER,
+            payload: { message: "user cancel login" }
+          });
         }
       } catch (e) {
-        dispatch({ type: ActionTypes.USER, payload: { error: true } });
+        dispatch({
+          type: ActionTypes.USER,
+          payload: { message: "error on logging in user to google" }
+        });
       }
     };
   }

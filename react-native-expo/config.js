@@ -1,6 +1,6 @@
-import { IOSCLIENTID, ANDROIDCLIENTID } from "@env";
+import { IOS_CLIENT_ID, ANDROID_CLIENT_ID } from "@env";
 
 export default {
-  IOSCLIENTID,
-  ANDROIDCLIENTID
+  IOS_CLIENT_ID,
+  ANDROID_CLIENT_ID
 };

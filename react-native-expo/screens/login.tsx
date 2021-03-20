@@ -7,12 +7,12 @@ import styles from "../styles";
 
 const Login = (props) => {
   const handleGoogleSignin = () => {
-    props.loginWithGoogle();
+    props.loginWithGmail();
   };
 
   useEffect(() => {
-    // console.log({ user: props.user });
-  }, [props.loading]);
+    console.log({ user: props.user, loading: props.loading });
+  }, [props?.loading]);
 
   return (
     <View style={styles.container}>
@@ -22,7 +22,6 @@ const Login = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  // console.log({ state });
   return {
     user: state.userReducer.obj,
     loading: state.userReducer.loading
@@ -31,8 +30,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loginWithGoogle: () => {
-      dispatch(UserAction.LoginWithGoogle());
+    loginWithGmail: () => {
+      dispatch(UserAction.LoginWithGmail());
     }
   };
 };
