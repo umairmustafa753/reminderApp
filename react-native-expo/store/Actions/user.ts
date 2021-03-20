@@ -80,6 +80,32 @@ const UserAction = {
         });
       }
     };
+  },
+
+  GetUser: (obj) => {
+    return async (dispatch) => {
+      dispatch({ type: ActionTypes.USER_REQUST, payload: {} });
+      try {
+        firebase
+          .database()
+          .ref("/users/" + obj.uid)
+          .get()
+          .then((user) => {
+            dispatch({
+              type: ActionTypes.USER,
+              payload: user.val()
+            });
+          })
+          .catch(() => {
+            dispatch({
+              type: ActionTypes.USER,
+              message: "unable to fetch user"
+            });
+          });
+      } catch (e) {
+        dispatch({ type: ActionTypes.USER, message: "unable to fetch user" });
+      }
+    };
   }
 };
 

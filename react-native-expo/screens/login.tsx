@@ -1,22 +1,59 @@
 import React, { useEffect } from "react";
-import { View, Button } from "react-native";
+import { View } from "react-native";
 import { connect } from "react-redux";
+import { SocialIcon } from "react-native-elements";
+import { useNavigation } from "@react-navigation/native";
+import firebase from "firebase";
 
+import { NAVIGATIONS } from "../constants/navigator";
 import UserAction from "../store/Actions/user";
 import styles from "../styles";
 
 const Login = (props) => {
+  const navigator = useNavigation();
+
   const handleGoogleSignin = () => {
     props.loginWithGmail();
   };
 
+  const checkIfLoggedIn = () => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        navigator.reset({
+          routes: [
+            {
+              name: NAVIGATIONS.DASHBOARD,
+              params: {
+                uid: user?.uid
+              }
+            }
+          ]
+        });
+      }
+    });
+  };
+
   useEffect(() => {
-    console.log({ user: props.user, loading: props.loading });
-  }, [props?.loading]);
+    checkIfLoggedIn();
+  }, []);
 
   return (
     <View style={styles.container}>
-      <Button onPress={handleGoogleSignin} title="Log in with Google" />
+      <View
+        style={{
+          width: "100%",
+          flex: 1,
+          justifyContent: "flex-end",
+          bottom: 50
+        }}
+      >
+        <SocialIcon
+          title="Sign In with Google"
+          button
+          type="google"
+          onPress={handleGoogleSignin}
+        />
+      </View>
     </View>
   );
 };
