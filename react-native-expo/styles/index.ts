@@ -35,6 +35,43 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "#FFF",
     textAlign: "center"
+  },
+  fastImage: {
+    width: 60,
+    height: 60,
+    borderRadius: 100
+  },
+  username: {
+    alignSelf: "center",
+    marginLeft: 20,
+    fontSize: 20
+  },
+  bottom20: {
+    marginBottom: 20
+  },
+  Mbottom20: {
+    marginBottom: -20
+  },
+  right10: {
+    marginRight: 10
+  },
+  left5: {
+    marginLeft: 5
+  },
+  cardView: {
+    flex: 1,
+    flexDirection: "row"
+  },
+  logoImageWithSelf: {
+    width: 200,
+    height: 200,
+    alignSelf: "center"
+  },
+  textCenter: {
+    textAlign: "center"
+  },
+  buttonBackground: {
+    backgroundColor: "#1C70CA"
   }
 });
 

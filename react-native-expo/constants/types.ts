@@ -5,4 +5,17 @@ export type RootStackParamList = {
 export type StackParamList = {
   Login: undefined;
   Dashboard: undefined;
+  Event: undefined;
 };
+
+export interface remindersProps {
+  date?: string;
+  time?: string;
+  message?: string;
+  users?: users[];
+}
+
+export interface users {
+  name?: string;
+  avatar?: string;
+}

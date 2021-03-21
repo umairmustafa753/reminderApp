@@ -32,6 +32,15 @@ const Dashboard = (props) => {
     }
   }, [props?.loading]);
 
+  const handleEvent = (date) => {
+    navigator.navigate({
+      name: NAVIGATIONS.EVENT,
+      params: {
+        date: date
+      }
+    });
+  };
+
   return (
     <>
       {props.loading ? (
@@ -47,9 +56,9 @@ const Dashboard = (props) => {
             futureScrollRange={50}
             scrollEnabled={true}
             showScrollIndicator={true}
-            // onDayPress={day => {
-            //   handleEvent(day?.dateString);
-            // }}
+            onDayPress={(day) => {
+              handleEvent(day?.dateString);
+            }}
             markedDates={{
               "2021-03-16": {
                 selected: true,
