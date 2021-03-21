@@ -7,10 +7,12 @@ import {
 } from "@react-navigation/native";
 import { Header, Card, Button, Avatar } from "react-native-elements";
 import ActionButton from "react-native-action-button";
+import UserAvatar from "react-native-user-avatar";
 import Icon from "react-native-vector-icons/Ionicons";
 
+import { NAVIGATIONS } from "../constants/navigator";
 import { remindersProps } from "../constants/types";
-import Styles from "../styles";
+import styles from "../styles";
 
 const Event = () => {
   const route = useRoute();
@@ -55,9 +57,9 @@ const Event = () => {
     navigator.dispatch(StackActions.popToTop());
   };
 
-  //   const handleAdd = () => {
-  //     navigator.navigate(NAVIGATIONS.CREATE);
-  //   };
+  const handleAdd = () => {
+    navigator.navigate(NAVIGATIONS.REMINDER);
+  };
 
   return (
     <ScrollView>
@@ -78,11 +80,11 @@ const Event = () => {
         <View>
           <Image
             resizeMode="cover"
-            style={Styles.logoImageWithSelf}
+            style={styles.logoImageWithSelf}
             source={require("../assets/logo.png")}
           />
-          <View style={Styles.bottom20} />
-          <Text style={Styles.textCenter}>For {route?.params?.date}</Text>
+          <View style={styles.bottom20} />
+          <Text style={styles.textCenter}>For {route?.params?.date}</Text>
         </View>
       </Card>
       {reminders?.map((reminder) => {
@@ -91,22 +93,22 @@ const Event = () => {
             <Card.Title>{reminder?.time}</Card.Title>
             <Card.Divider />
             <View>
-              <Text style={Styles.bottom20}>{reminder?.message}</Text>
-              <Text style={Styles.bottom20}>People Include in Reminder</Text>
+              <Text style={styles.bottom20}>{reminder?.message}</Text>
+              <Text style={styles.bottom20}>People Include in Reminder</Text>
             </View>
             {reminder?.users?.map((u, i) => {
               return (
                 <>
                   <Card.Divider />
-                  <View key={i} style={Styles.cardView}>
-                    <Avatar
-                      rounded
-                      size={50}
-                      source={{
-                        uri: u.avatar
-                      }}
+                  <View key={i} style={styles.cardView}>
+                    <UserAvatar
+                      size={60}
+                      key={u.avatar}
+                      name={u.name}
+                      src={u.avatar}
+                      style={styles.avatar}
                     />
-                    <Text style={Styles.username}>
+                    <Text style={styles.username}>
                       {" "}
                       {u.name.length > 15
                         ? u.name.substring(0, 15) + "..."
@@ -120,12 +122,12 @@ const Event = () => {
               buttonColor="#1C70CA"
               degrees={0}
               size={50}
-              style={Styles.Mbottom20}
+              style={styles.Mbottom20}
               renderIcon={() => {
                 return (
                   <Icon
                     name="ios-star-half-outline"
-                    style={Styles.actionButtonIcon}
+                    style={styles.actionButtonIcon}
                   />
                 );
               }}
@@ -135,14 +137,14 @@ const Event = () => {
                 title="Delete Reminder"
                 onPress={() => {}}
               >
-                <Icon name="md-trash-bin" style={Styles.actionButtonIcon} />
+                <Icon name="md-trash-bin" style={styles.actionButtonIcon} />
               </ActionButton.Item>
               <ActionButton.Item
                 buttonColor="#1ABFA6"
                 title="Edit Reminder"
                 onPress={() => {}}
               >
-                <Icon name="md-pencil" style={Styles.actionButtonIcon} />
+                <Icon name="md-pencil" style={styles.actionButtonIcon} />
               </ActionButton.Item>
             </ActionButton>
           </Card>
@@ -150,16 +152,16 @@ const Event = () => {
       })}
       <Card>
         <Button
-          buttonStyle={Styles.buttonBackground}
+          buttonStyle={styles.buttonBackground}
           icon={
             <Icon
               name="ios-calendar-outline"
               color="#ffffff"
               size={20}
-              style={Styles.right10}
+              style={styles.right10}
             />
           }
-          onPress={() => {}}
+          onPress={handleAdd}
           title="Add Reminder"
         />
       </Card>

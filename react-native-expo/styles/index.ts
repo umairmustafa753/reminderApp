@@ -72,6 +72,29 @@ const styles = StyleSheet.create({
   },
   buttonBackground: {
     backgroundColor: "#1C70CA"
+  },
+  reminderContainer: {
+    marginTop: 50,
+    padding: 20,
+    zIndex: 1
+  },
+  horizentalList: {
+    width: 60,
+    marginRight: 15
+  },
+  mTop: {
+    marginTop: 20
+  },
+  mTop5: {
+    marginTop: 5
+  },
+  whiteText: {
+    color: "white"
+  },
+  avatar: {
+    height: 60,
+    width: 60,
+    justifyContent: "flex-end"
   }
 });
 

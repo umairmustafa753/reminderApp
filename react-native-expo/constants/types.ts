@@ -6,6 +6,7 @@ export type StackParamList = {
   Login: undefined;
   Dashboard: undefined;
   Event: undefined;
+  Reminder: undefined;
 };
 
 export interface remindersProps {
