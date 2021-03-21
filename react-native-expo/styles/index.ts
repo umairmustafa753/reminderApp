@@ -11,6 +11,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     height: 22,
     color: "white"
+  },
+  loaderContent: {
+    color: "#FFF"
+  },
+  lottie: {
+    width: 300,
+    height: 300
   }
 });
 

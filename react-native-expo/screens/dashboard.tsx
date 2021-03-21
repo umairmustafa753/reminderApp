@@ -8,6 +8,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 import { NAVIGATIONS } from "../constants/navigator";
 import UserAction from "../store/Actions/user";
+import Loader from "../components/loader";
 import styles from "../styles";
 
 const Dashboard = (props) => {
@@ -31,33 +32,38 @@ const Dashboard = (props) => {
   }, [props?.loading]);
 
   return (
-    <View style={styles.container}>
-      <Text>Hello {user?.gmail}</Text>
-      <ActionButton
-        buttonColor="rgba(231,76,60,1)"
-        degrees={0}
-        renderIcon={() => {
-          return (
-            <Ionicons name="person-outline" style={styles.actionButtonIcon} />
-          );
-        }}
-      >
-        <ActionButton.Item
-          buttonColor="#CA1C3B"
-          title="Log out"
-          onPress={handleSignOut}
-        >
-          <Ionicons name="log-out-outline" style={styles.actionButtonIcon} />
-        </ActionButton.Item>
-        <ActionButton.Item
-          buttonColor="#9b59b6"
-          title="Edit Profile"
-          onPress={() => {}}
-        >
-          <Ionicons name="md-pencil" style={styles.actionButtonIcon} />
-        </ActionButton.Item>
-      </ActionButton>
-    </View>
+    <>
+      {props.loading ? (
+        <Loader loading={props.loading} />
+      ) : (
+        <View style={styles.container}>
+          <Text>Hello {user?.gmail}</Text>
+          <ActionButton
+            buttonColor="rgba(231,76,60,1)"
+            degrees={0}
+            renderIcon={() => {
+              return (
+                <Ionicons
+                  name="person-outline"
+                  style={styles.actionButtonIcon}
+                />
+              );
+            }}
+          >
+            <ActionButton.Item
+              buttonColor="#CA1C3B"
+              title="Sign Out"
+              onPress={handleSignOut}
+            >
+              <Ionicons
+                name="log-out-outline"
+                style={styles.actionButtonIcon}
+              />
+            </ActionButton.Item>
+          </ActionButton>
+        </View>
+      )}
+    </>
   );
 };
 
