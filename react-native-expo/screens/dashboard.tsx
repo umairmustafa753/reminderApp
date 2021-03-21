@@ -5,6 +5,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import ActionButton from "react-native-action-button";
 import firebase from "firebase";
 import { Ionicons } from "@expo/vector-icons";
+import { CalendarList } from "react-native-calendars";
 
 import { NAVIGATIONS } from "../constants/navigator";
 import UserAction from "../store/Actions/user";
@@ -36,8 +37,26 @@ const Dashboard = (props) => {
       {props.loading ? (
         <Loader loading={props.loading} />
       ) : (
-        <View style={styles.container}>
-          <Text>Hello {user?.gmail}</Text>
+        <View>
+          <CalendarList
+            theme={{
+              textDayFontWeight: "300",
+              textDayHeaderFontWeight: "300"
+            }}
+            pastScrollRange={50}
+            futureScrollRange={50}
+            scrollEnabled={true}
+            showScrollIndicator={true}
+            // onDayPress={day => {
+            //   handleEvent(day?.dateString);
+            // }}
+            markedDates={{
+              "2021-03-16": {
+                selected: true,
+                marked: true
+              }
+            }}
+          />
           <ActionButton
             buttonColor="rgba(231,76,60,1)"
             degrees={0}

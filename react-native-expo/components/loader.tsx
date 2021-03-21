@@ -9,7 +9,7 @@ const Loader = (loading: any) => {
       visible={Boolean(loading)}
       overlayColor="rgba(255,255,255,0.75)"
       animationStyle={styles.lottie}
-      source={require("../assets/41267-loader.json")}
+      source={require("../assets/990-inattentive.json")}
       speed={1}
     />
   );
