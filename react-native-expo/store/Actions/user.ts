@@ -10,8 +10,8 @@ const UserAction = {
       dispatch({ type: ActionTypes.USER_REQUST, payload: {} });
       try {
         const user = await Google.logInAsync({
-          androidClientId: config.ANDROID_CLIENT_ID,
-          iosClientId: config.IOS_CLIENT_ID,
+          androidClientId: config.GOOGLE_ANDROID_CLIENT_ID,
+          iosClientId: config.GOOGLE_IOS_CLIENT_ID,
           behavior: "web",
           scopes: ["profile", "email"]
         });
@@ -30,7 +30,7 @@ const UserAction = {
                 .signInWithCredential(credential)
                 .then((result) => {
                   let user = {
-                    gmail: result.user.email,
+                    email: result.user.email,
                     profile_picture:
                       result?.additionalUserInfo?.profile?.picture,
                     first_name: result?.additionalUserInfo?.profile?.given_name,

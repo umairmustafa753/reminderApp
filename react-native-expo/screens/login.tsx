@@ -87,8 +87,8 @@ const Login = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    user: state.userReducer.obj,
-    loading: state.userReducer.loading
+    user: state?.userReducer?.obj,
+    loading: state?.userReducer?.loading
   };
 };
 

@@ -1,9 +1,12 @@
+import config from "../config";
+
 export const firebaseConfig = {
-  apiKey: "AIzaSyDWXCQWjkMGrsI5KLYyGflaHTVG5eeCbE0",
-  authDomain: "reminderapp-e0a3f.firebaseapp.com",
-  projectId: "reminderapp-e0a3f",
-  storageBucket: "reminderapp-e0a3f.appspot.com",
-  messagingSenderId: "298726867272",
-  appId: "1:298726867272:web:d9b0bbc4995fe6aa56337d",
-  measurementId: "G-RZJMYYTZNE"
+  apiKey: config.APIKEY,
+  authDomain: config.AUTH_DOMAIN,
+  databaseURL: config.DATABASE_URL,
+  projectId: config.PROJECT_ID,
+  storageBucket: config.STORAGE_BUCKET,
+  messagingSenderId: config.MESSAGING_SENDER_ID,
+  appId: config.APP_ID,
+  measurementId: config.MEASUREMENT_ID
 };

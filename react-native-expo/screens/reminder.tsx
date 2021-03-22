@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { View, ScrollView, TouchableOpacity, Text } from "react-native";
 import {
@@ -9,14 +9,16 @@ import {
 import UserAvatar from "react-native-user-avatar";
 import Icon from "react-native-vector-icons/Ionicons";
 import ActionButton from "react-native-action-button";
+import { connect } from "react-redux";
 import { Searchbar } from "react-native-paper";
 import { Input, Button } from "react-native-elements";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
+import UsersAction from "../store/Actions/users";
 import Wavy from "../components/wavy";
 import styles from "../styles";
 
-const Reminder = () => {
+const Reminder = (props) => {
   const route = useRoute();
   const navigator = useNavigation();
 
@@ -24,47 +26,11 @@ const Reminder = () => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState<boolean>(
     false
   );
-  const [people, setPeople] = useState([
-    {
-      name: "brynn",
-      avatar: "https://i.pravatar.cc/300"
-    },
-    {
-      name: "Alex",
-      avatar: "https://i.pravatar.cc/300"
-    },
-    {
-      name: "Jhon",
-      avatar: "https://i.pravatar.cc/300"
-    },
-    {
-      name: "brynn",
-      avatar: "https://i.pravatar.cc/300"
-    },
-    {
-      name: "Alex",
-      avatar: "https://i.pravatar.cc/300"
-    },
-    {
-      name: "Jhon",
-      avatar: "https://i.pravatar.cc/300"
-    },
-    {
-      name: "brynn",
-      avatar: "https://i.pravatar.cc/300"
-    },
-    {
-      name: "Alex",
-      avatar: "https://i.pravatar.cc/300"
-    },
-    {
-      name: "Jhon",
-      avatar: "https://i.pravatar.cc/300"
-    }
-  ]);
+  const [users, setUsers] = useState([]);
 
   const handleSearch = (e) => {
     setSearch(e);
+    props.getUsers({ email: e });
   };
 
   const handleBack = () => {
@@ -77,12 +43,21 @@ const Reminder = () => {
   };
 
   const handleDateConfirm = (date) => {
-    console.log({ date });
+    // console.log({ date });
   };
 
   const hideDatePicker = () => {
     setDatePickerVisibility(false);
   };
+
+  useEffect(() => {
+    if (props?.users) {
+      const usersArray = Object.values(props?.users);
+      setUsers(usersArray);
+    } else {
+      setUsers([]);
+    }
+  }, [props?.users]);
 
   return (
     <View style={styles.container}>
@@ -101,10 +76,10 @@ const Reminder = () => {
           onChangeText={handleSearch}
           value={search}
         />
-        {true ? (
+        {users.length ? (
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             <View style={styles.cardView}>
-              {people?.map((u, i) => {
+              {users?.map((u, i) => {
                 return (
                   <TouchableOpacity
                     key={i}
@@ -112,9 +87,9 @@ const Reminder = () => {
                   >
                     <UserAvatar
                       size={60}
-                      key={u.avatar}
-                      name={u.name}
-                      src={u.avatar}
+                      key={u?.profile_picture}
+                      name={`${u?.first_name} ${u?.last_name}`}
+                      src={u?.profile_picture}
                       style={styles.avatar}
                     />
                     <Text
@@ -124,9 +99,10 @@ const Reminder = () => {
                         styles.mTop5
                       ]}
                     >
-                      {u.name.length > 5
-                        ? u.name.substring(0, 5) + "..."
-                        : u.name}
+                      {`${u?.first_name} ${u?.last_name}`.length > 5
+                        ? `${u?.first_name} ${u?.last_name}`?.substring(0, 5) +
+                          "..."
+                        : `${u?.first_name} ${u?.last_name}`}
                     </Text>
                   </TouchableOpacity>
                 );
@@ -134,9 +110,14 @@ const Reminder = () => {
             </View>
           </ScrollView>
         ) : (
-          <Text style={[styles.textCenter, styles.whiteText, styles.mTop5]}>
-            No People added
-          </Text>
+          <>
+            <Text style={[styles.textCenter, styles.whiteText, styles.mTop5]}>
+              No users found
+            </Text>
+            <Text style={[styles.textCenter, styles.whiteText, styles.mTop5]}>
+              Hint: Search with exact email.
+            </Text>
+          </>
         )}
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
@@ -192,4 +173,19 @@ const Reminder = () => {
   );
 };
 
-export default Reminder;
+const mapStateToProps = (state) => {
+  return {
+    users: state?.usersReducer?.users,
+    loading: state?.usersReducer?.loading
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getUsers: (obj) => {
+      dispatch(UsersAction.GetUsers(obj));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Reminder);

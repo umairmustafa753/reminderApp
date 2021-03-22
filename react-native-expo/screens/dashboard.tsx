@@ -24,7 +24,7 @@ const Dashboard = (props) => {
   };
 
   useEffect(() => {
-    if (!props?.user?.gmail) {
+    if (!props?.user?.email) {
       props.getUser({ uid: route?.params?.uid });
       setUser(props.user);
     } else {
