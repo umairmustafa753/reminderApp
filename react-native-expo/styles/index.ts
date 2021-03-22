@@ -10,6 +10,12 @@ const styles = StyleSheet.create({
     height: 22,
     color: "#FFF"
   },
+  backIcon: {
+    fontSize: 30,
+    height: 52,
+    width: 52,
+    color: "#FFF"
+  },
   loaderContent: {
     color: "#FFF"
   },
@@ -73,6 +79,9 @@ const styles = StyleSheet.create({
   buttonBackground: {
     backgroundColor: "#1C70CA"
   },
+  reminderButton: {
+    backgroundColor: "#0d917a"
+  },
   reminderContainer: {
     marginTop: 50,
     padding: 20,
@@ -90,6 +99,10 @@ const styles = StyleSheet.create({
   },
   whiteText: {
     color: "white"
+  },
+  textBox: {
+    color: "white",
+    maxHeight: 150
   },
   avatar: {
     height: 60,
