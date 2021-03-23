@@ -99,11 +99,14 @@ const UserAction = {
           .catch(() => {
             dispatch({
               type: ActionTypes.USER,
-              message: "unable to fetch user"
+              payload: { message: "unable to fetch user" }
             });
           });
       } catch (e) {
-        dispatch({ type: ActionTypes.USER, message: "unable to fetch user" });
+        dispatch({
+          type: ActionTypes.USER,
+          payload: { message: "unable to fetch user" }
+        });
       }
     };
   }

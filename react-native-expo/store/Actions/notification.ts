@@ -18,6 +18,10 @@ const NotificatonAction = {
         return;
       }
       try {
+        dispatch({
+          type: ActionTypes.REQUST_PUSH_NOTIFICATIN,
+          payload: {}
+        });
         const token = (await Notifications.getExpoPushTokenAsync()).data;
         firebase
           .database()
