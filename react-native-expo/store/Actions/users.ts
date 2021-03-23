@@ -21,7 +21,7 @@ const UserAction = {
       } catch (e) {
         dispatch({
           type: ActionTypes.GET_USERS,
-          message: "unable to fetch users"
+          payload: { message: "unable to fetch users" }
         });
       }
     };

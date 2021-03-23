@@ -43,7 +43,11 @@ const Reminder = (props) => {
   };
 
   const handleDateConfirm = (date) => {
-    // console.log({ date });
+    const currentDate = new Date();
+    const targetDate = new Date(date);
+    const dif = ((targetDate.getTime() - currentDate.getTime()) / 1000).toFixed(
+      0
+    );
   };
 
   const hideDatePicker = () => {
@@ -122,6 +126,7 @@ const Reminder = (props) => {
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
           mode="datetime"
+          date={new Date()}
           onConfirm={handleDateConfirm}
           onCancel={hideDatePicker}
         />

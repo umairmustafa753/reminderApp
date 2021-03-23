@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import ActionButton from "react-native-action-button";
 import firebase from "firebase";
@@ -9,6 +9,7 @@ import { CalendarList } from "react-native-calendars";
 
 import { NAVIGATIONS } from "../constants/navigator";
 import UserAction from "../store/Actions/user";
+import NotificationAction from "../store/Actions/notification";
 import Loader from "../components/loader";
 import styles from "../styles";
 
@@ -31,6 +32,14 @@ const Dashboard = (props) => {
       setUser(props.user);
     }
   }, [props?.loading]);
+
+  useEffect(() => {
+    pushNotification();
+  }, []);
+
+  const pushNotification = async () => {
+    await props.registerForPushNotifications({ uid: route?.params?.uid });
+  };
 
   const handleEvent = (date) => {
     navigator.navigate({
@@ -106,6 +115,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getUser: (obj) => {
       dispatch(UserAction.GetUser(obj));
+    },
+    registerForPushNotifications: (obj) => {
+      dispatch(NotificationAction.RegisterForPushNotifications(obj));
     }
   };
 };
