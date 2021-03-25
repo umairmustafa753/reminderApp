@@ -2,8 +2,7 @@ import { StyleSheet, Dimensions } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#fff"
+    flex: 1
   },
   actionButtonIcon: {
     fontSize: 20,
@@ -102,12 +101,24 @@ const styles = StyleSheet.create({
   },
   textBox: {
     color: "white",
-    maxHeight: 150
+    maxHeight: 200
+  },
+  font22: {
+    fontSize: 22
   },
   avatar: {
     height: 60,
     width: 60,
     justifyContent: "flex-end"
+  },
+  spinnerTextStyle: {
+    color: "#fff"
+  },
+  avatarIcon: {
+    top: -5,
+    right: -20,
+    zIndex: 1,
+    position: "absolute"
   }
 });
 

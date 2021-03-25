@@ -15,7 +15,15 @@ const StackScreens = () => {
       <Stack.Screen name={"Login"} component={Login} />
       <Stack.Screen name={"Dashboard"} component={Dashboard} />
       <Stack.Screen name={"Event"} component={Event} />
-      <Stack.Screen name={"Reminder"} component={Reminder} />
+      <Stack.Screen
+        name={"Reminder"}
+        component={Reminder}
+        options={{
+          cardStyle: {
+            backgroundColor: "#118571"
+          }
+        }}
+      />
     </Stack.Navigator>
   );
 };
