@@ -16,6 +16,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from "moment";
 
 import UsersAction from "../store/Actions/users";
+import ReminderAction from "../store/Actions/reminder";
 import HorizentalList from "../components/horizentalList";
 import { MESSAGE, TYPE } from "../constants/constant";
 import styles from "../styles";
@@ -103,10 +104,13 @@ const Reminder = (props) => {
       showToast(MESSAGE.FAILED_TO_ADD_DATE_TIME, TYPE.ERROR);
     }
     const obj = {
+      user_email: props?.user?.email,
+      user_name: `${props?.user?.first_name} ${props?.user?.last_name}`,
       note: message,
       users: selectedUsers,
       date: date
     };
+    props.addReminder(obj);
   };
 
   return (
@@ -223,6 +227,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getUsers: (obj) => {
       dispatch(UsersAction.GetUsers(obj));
+    },
+    addReminder: (obj) => {
+      dispatch(ReminderAction.Add(obj));
     }
   };
 };
