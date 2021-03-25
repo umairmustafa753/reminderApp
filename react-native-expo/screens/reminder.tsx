@@ -11,10 +11,13 @@ import { connect } from "react-redux";
 import { Searchbar } from "react-native-paper";
 import { Input, Button } from "react-native-elements";
 import Spinner from "react-native-loading-spinner-overlay";
+import Toast from "react-native-toast-message";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import moment from "moment";
 
 import UsersAction from "../store/Actions/users";
 import HorizentalList from "../components/horizentalList";
+import { MESSAGE, TYPE } from "../constants/constant";
 import styles from "../styles";
 
 const Reminder = (props) => {
@@ -25,11 +28,20 @@ const Reminder = (props) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState<boolean>(
     false
   );
+  const [enableToast, setEnableToast] = useState({
+    visible: false
+  });
   const [users, setUsers] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
+  const [message, setMessage] = useState("");
+  const [date, setDate] = useState({
+    date: "",
+    seconds: ""
+  });
 
   const handleSearch = () => {
     if (search !== props?.user?.email) props.getUsers({ email: search });
+    else props.getUsers({ email: "" });
   };
 
   const handleBack = () => {
@@ -42,15 +54,28 @@ const Reminder = (props) => {
   };
 
   const handleDateConfirm = (date) => {
+    hideDatePicker();
     const currentDate = new Date();
     const targetDate = new Date(date);
     const dif = ((targetDate.getTime() - currentDate.getTime()) / 1000).toFixed(
       0
     );
+    if (dif < "0") showToast(MESSAGE.FAILED_TO_ADD_DATE_TIME, TYPE.ERROR);
+    else setDate({ date: date, seconds: dif });
   };
 
   const hideDatePicker = () => {
     setDatePickerVisibility(false);
+  };
+
+  const showToast = (msg: string, type: string) => {
+    Toast.show({
+      type: `${type}`,
+      position: "top",
+      text1: `${msg}`,
+      autoHide: true,
+      topOffset: 50
+    });
   };
 
   useEffect(() => {
@@ -71,12 +96,26 @@ const Reminder = (props) => {
     setSelectedUsers(users.filter((ele) => ele?.email !== user?.email));
   };
 
+  const handleSave = () => {
+    if (!message || !message.trim().length) {
+      showToast(MESSAGE.FAILED_ADD_MESSAGE, TYPE.ERROR);
+    } else if (!date.date) {
+      showToast(MESSAGE.FAILED_TO_ADD_DATE_TIME, TYPE.ERROR);
+    }
+    const obj = {
+      note: message,
+      users: selectedUsers,
+      date: date
+    };
+  };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : null}
       keyboardVerticalOffset={30}
       style={styles.container}
     >
+      <Toast ref={(ref) => Toast.setRef(ref)} style={styles.zIndex} />
       <ScrollView>
         <Spinner
           visible={props?.loading}
@@ -104,7 +143,13 @@ const Reminder = (props) => {
             users={users}
             onPress={addUser}
             iconType="add"
-            info="No users found"
+            info="No user found"
+          />
+          <DateTimePickerModal
+            isVisible={isDatePickerVisible}
+            mode="datetime"
+            onConfirm={handleDateConfirm}
+            onCancel={hideDatePicker}
           />
           <View style={styles.mTop5} />
           <HorizentalList
@@ -113,13 +158,6 @@ const Reminder = (props) => {
             iconType="remove"
             titile="Added Users"
           />
-          <DateTimePickerModal
-            isVisible={isDatePickerVisible}
-            mode="datetime"
-            date={new Date()}
-            onConfirm={handleDateConfirm}
-            onCancel={hideDatePicker}
-          />
           <View style={styles.mTop} />
           <Input
             multiline
@@ -127,6 +165,7 @@ const Reminder = (props) => {
             placeholderTextColor="white"
             placeholder="Message"
             style={styles.textBox}
+            onChangeText={(value) => setMessage(value)}
             leftIcon={{
               type: "font-awesome",
               color: "white",
@@ -144,7 +183,13 @@ const Reminder = (props) => {
               />
             }
             onPress={showDatePicker}
-            title="Pick Date and Time"
+            title={
+              date.date
+                ? moment(date?.date, "YYYY-MM-DD HH:mm:ss").format(
+                    "YYYY-MM-DD HH:mm:ss"
+                  )
+                : "Pick Date and Time"
+            }
           />
           <View style={styles.mTop} />
           <Button
@@ -157,7 +202,7 @@ const Reminder = (props) => {
                 style={styles.right10}
               />
             }
-            onPress={() => {}}
+            onPress={handleSave}
             title="Save"
           />
         </View>

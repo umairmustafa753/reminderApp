@@ -100,8 +100,8 @@ const styles = StyleSheet.create({
     color: "white"
   },
   textBox: {
-    color: "white",
-    maxHeight: 200
+    color: "white"
+    // maxHeight: 200
   },
   font22: {
     fontSize: 22
@@ -119,6 +119,9 @@ const styles = StyleSheet.create({
     right: -20,
     zIndex: 1,
     position: "absolute"
+  },
+  zIndex: {
+    zIndex: 1
   }
 });
 
