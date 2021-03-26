@@ -29,11 +29,7 @@ const Reminder = (props) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState<boolean>(
     false
   );
-  const [enableToast, setEnableToast] = useState({
-    visible: false
-  });
   const [users, setUsers] = useState([]);
-  const [selectedUsers, setSelectedUsers] = useState([]);
   const [message, setMessage] = useState("");
   const [date, setDate] = useState({
     date: "",
@@ -82,19 +78,16 @@ const Reminder = (props) => {
   useEffect(() => {
     if (props?.users) {
       const usersArray = Object.values(props?.users);
-      setUsers(usersArray);
-    } else {
-      setUsers([]);
+      if (
+        !users.some((ele) => ele?.email === usersArray[0]?.email) &&
+        usersArray[0]
+      )
+        setUsers((users) => [...users, usersArray[0]]);
     }
   }, [props?.users]);
 
-  const addUser = (user) => {
-    if (!selectedUsers.some((ele) => ele?.email === user?.email))
-      setSelectedUsers((users) => [...users, user]);
-  };
-
   const removeUser = (user) => {
-    setSelectedUsers(users.filter((ele) => ele?.email !== user?.email));
+    setUsers(users.filter((ele) => ele?.email !== user?.email));
   };
 
   const handleSave = () => {
@@ -102,15 +95,16 @@ const Reminder = (props) => {
       showToast(MESSAGE.FAILED_ADD_MESSAGE, TYPE.ERROR);
     } else if (!date.date) {
       showToast(MESSAGE.FAILED_TO_ADD_DATE_TIME, TYPE.ERROR);
+    } else {
+      const obj = {
+        user_email: props?.user?.email,
+        user_name: `${props?.user?.first_name} ${props?.user?.last_name}`,
+        note: message,
+        users: users,
+        date: date
+      };
+      props.addReminder(obj);
     }
-    const obj = {
-      user_email: props?.user?.email,
-      user_name: `${props?.user?.first_name} ${props?.user?.last_name}`,
-      note: message,
-      users: selectedUsers,
-      date: date
-    };
-    props.addReminder(obj);
   };
 
   return (
@@ -143,12 +137,6 @@ const Reminder = (props) => {
             icon={"account-search-outline"}
             onEndEditing={handleSearch}
           />
-          <HorizentalList
-            users={users}
-            onPress={addUser}
-            iconType="add"
-            info="No user found"
-          />
           <DateTimePickerModal
             isVisible={isDatePickerVisible}
             mode="datetime"
@@ -157,10 +145,10 @@ const Reminder = (props) => {
           />
           <View style={styles.mTop5} />
           <HorizentalList
-            users={selectedUsers}
+            users={users}
             onPress={removeUser}
             iconType="remove"
-            titile="Added Users"
+            info="No user found"
           />
           <View style={styles.mTop} />
           <Input
