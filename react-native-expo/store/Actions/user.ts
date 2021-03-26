@@ -57,7 +57,7 @@ const UserAction = {
                 .catch(() => {
                   dispatch({
                     type: ActionTypes.USER,
-                    payload: { message: "error on saving user to firebase" }
+                    payload: { message: "unable to get login user cradentials" }
                   });
                 });
             });
@@ -91,9 +91,11 @@ const UserAction = {
           .ref("/users/" + obj.uid)
           .get()
           .then((user) => {
+            let userObj = user.val();
+            userObj.uid = obj.uid;
             dispatch({
               type: ActionTypes.USER,
-              payload: user.val()
+              payload: userObj
             });
           })
           .catch(() => {

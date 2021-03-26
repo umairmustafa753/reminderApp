@@ -8,6 +8,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { CalendarList } from "react-native-calendars";
 
 import { NAVIGATIONS } from "../constants/navigator";
+import ReminderAction from "../store/Actions/reminder";
 import UserAction from "../store/Actions/user";
 import NotificationAction from "../store/Actions/notification";
 import Loader from "../components/loader";
@@ -35,6 +36,7 @@ const Dashboard = (props) => {
 
   useEffect(() => {
     pushNotification();
+    props.setAddReminderSuccesFalse();
   }, []);
 
   const pushNotification = async () => {
@@ -118,6 +120,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     registerForPushNotifications: (obj) => {
       dispatch(NotificationAction.RegisterForPushNotifications(obj));
+    },
+    setAddReminderSuccesFalse: () => {
+      dispatch(ReminderAction.SetAddReminderSuccesFalse());
     }
   };
 };

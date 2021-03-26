@@ -7,6 +7,7 @@ export type StackParamList = {
   Dashboard: undefined;
   Event: undefined;
   Reminder: undefined;
+  Success: undefined;
 };
 
 export interface usersProps {

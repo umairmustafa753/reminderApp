@@ -5,6 +5,7 @@ import Login from "../../screens/login";
 import Event from "../../screens/event";
 import Dashboard from "../../screens/dashboard";
 import Reminder from "../../screens/reminder";
+import Success from "../../screens/success";
 import { StackParamList } from "../../constants/types";
 
 const Stack = createStackNavigator<StackParamList>();
@@ -15,6 +16,7 @@ const StackScreens = () => {
       <Stack.Screen name={"Login"} component={Login} />
       <Stack.Screen name={"Dashboard"} component={Dashboard} />
       <Stack.Screen name={"Event"} component={Event} />
+      <Stack.Screen name={"Success"} component={Success} />
       <Stack.Screen
         name={"Reminder"}
         component={Reminder}

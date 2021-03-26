@@ -18,6 +18,7 @@ import moment from "moment";
 import UsersAction from "../store/Actions/users";
 import ReminderAction from "../store/Actions/reminder";
 import HorizentalList from "../components/horizentalList";
+import { NAVIGATIONS } from "../constants/navigator";
 import { MESSAGE, TYPE } from "../constants/constant";
 import styles from "../styles";
 
@@ -31,10 +32,8 @@ const Reminder = (props) => {
   );
   const [users, setUsers] = useState([]);
   const [message, setMessage] = useState("");
-  const [date, setDate] = useState({
-    date: "",
-    seconds: ""
-  });
+  const [title, setTitle] = useState("");
+  const [date, setDate] = useState("");
 
   const handleSearch = () => {
     if (search !== props?.user?.email) props.getUsers({ email: search });
@@ -52,13 +51,7 @@ const Reminder = (props) => {
 
   const handleDateConfirm = (date) => {
     hideDatePicker();
-    const currentDate = new Date();
-    const targetDate = new Date(date);
-    const dif = ((targetDate.getTime() - currentDate.getTime()) / 1000).toFixed(
-      0
-    );
-    if (dif < "0") showToast(MESSAGE.FAILED_TO_ADD_DATE_TIME, TYPE.ERROR);
-    else setDate({ date: date, seconds: dif });
+    setDate(date);
   };
 
   const hideDatePicker = () => {
@@ -75,6 +68,20 @@ const Reminder = (props) => {
     });
   };
 
+  const handleNavigate = () => {
+    navigator.reset({
+      routes: [
+        {
+          name: NAVIGATIONS.SUCCESS,
+          params: {
+            msg: MESSAGE.SUCCESS_REMINDER_MESSAGE,
+            navigateTo: NAVIGATIONS.DASHBOARD
+          }
+        }
+      ]
+    });
+  };
+
   useEffect(() => {
     if (props?.users) {
       const usersArray = Object.values(props?.users);
@@ -86,22 +93,41 @@ const Reminder = (props) => {
     }
   }, [props?.users]);
 
+  useEffect(() => {
+    if (props?.reminder?.success) handleNavigate();
+  }, [props?.reminder?.success]);
+
   const removeUser = (user) => {
     setUsers(users.filter((ele) => ele?.email !== user?.email));
   };
 
+  const checkDate = (date) => {
+    const currentDate = new Date();
+    const targetDate = new Date(date);
+    const dif = ((targetDate.getTime() - currentDate.getTime()) / 1000).toFixed(
+      0
+    );
+    return dif;
+  };
+
   const handleSave = () => {
-    if (!message || !message.trim().length) {
+    const seconds = checkDate(date);
+    if (!title || !title.trim().length) {
+      showToast(MESSAGE.FAILED_ADD_TITLE, TYPE.ERROR);
+    } else if (!message || !message.trim().length) {
       showToast(MESSAGE.FAILED_ADD_MESSAGE, TYPE.ERROR);
-    } else if (!date.date) {
+    } else if (!date || seconds < "0") {
       showToast(MESSAGE.FAILED_TO_ADD_DATE_TIME, TYPE.ERROR);
     } else {
       const obj = {
+        user_uid: props?.user?.uid,
         user_email: props?.user?.email,
         user_name: `${props?.user?.first_name} ${props?.user?.last_name}`,
+        title: title,
         note: message,
         users: users,
-        date: date
+        date: new Date(date).getTime(),
+        seconds: seconds
       };
       props.addReminder(obj);
     }
@@ -152,17 +178,24 @@ const Reminder = (props) => {
           />
           <View style={styles.mTop} />
           <Input
+            scrollEnabled={false}
+            placeholderTextColor="white"
+            placeholder="Title"
+            style={styles.textBox}
+            onChangeText={(value) => setTitle(value)}
+            leftIcon={{
+              type: "font-awesome",
+              color: "white",
+              name: "pencil-square"
+            }}
+          />
+          <Input
             multiline
             scrollEnabled={false}
             placeholderTextColor="white"
             placeholder="Message"
             style={styles.textBox}
             onChangeText={(value) => setMessage(value)}
-            leftIcon={{
-              type: "font-awesome",
-              color: "white",
-              name: "pencil-square-o"
-            }}
           />
           <Button
             buttonStyle={styles.reminderButton}
@@ -176,8 +209,8 @@ const Reminder = (props) => {
             }
             onPress={showDatePicker}
             title={
-              date.date
-                ? moment(date?.date, "YYYY-MM-DD HH:mm:ss").format(
+              date
+                ? moment(date, "YYYY-MM-DD HH:mm:ss").format(
                     "YYYY-MM-DD HH:mm:ss"
                   )
                 : "Pick Date and Time"
@@ -194,6 +227,7 @@ const Reminder = (props) => {
                 style={styles.right10}
               />
             }
+            disabled={props?.loading}
             onPress={handleSave}
             title="Save"
           />
@@ -207,6 +241,7 @@ const mapStateToProps = (state) => {
   return {
     user: state.userReducer.obj,
     users: state?.usersReducer?.users,
+    reminder: state?.reminderReducer?.reminder,
     loading: state?.usersReducer?.loading
   };
 };

@@ -122,6 +122,23 @@ const styles = StyleSheet.create({
   },
   zIndex: {
     zIndex: 1
+  },
+  successContainer: {
+    flex: 1,
+    backgroundColor: "white",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold"
+  },
+  padding: {
+    padding: 30
+  },
+  AnimatedText: {
+    fontSize: 40
   }
 });
 
