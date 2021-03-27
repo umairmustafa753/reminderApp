@@ -120,7 +120,7 @@ const Event = () => {
               renderIcon={() => {
                 return (
                   <Icon
-                    name="ios-star-half-outline"
+                    name="md-newspaper-sharp"
                     style={Styles.actionButtonIcon}
                   />
                 );
