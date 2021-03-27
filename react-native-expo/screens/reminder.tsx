@@ -9,7 +9,8 @@ import {
 import Icon from "react-native-vector-icons/Ionicons";
 import { connect } from "react-redux";
 import { Searchbar } from "react-native-paper";
-import { Input, Button } from "react-native-elements";
+import { Button, Header, Card } from "react-native-elements";
+import { TextInput } from "react-native-paper";
 import Spinner from "react-native-loading-spinner-overlay";
 import Toast from "react-native-toast-message";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -146,13 +147,16 @@ const Reminder = (props) => {
           textContent={"Loading..."}
           textStyle={styles.spinnerTextStyle}
         />
-        <StatusBar style="light" />
+        <Header
+          leftComponent={{
+            icon: "arrow-back",
+            color: "#fff",
+            onPress: handleBack
+          }}
+          rightComponent={{ icon: "add-task", color: "#fff" }}
+        />
+        <StatusBar style="inverted" />
         <View style={styles.reminderContainer}>
-          <Icon
-            name="arrow-back"
-            style={styles.backIcon}
-            onPress={handleBack}
-          />
           <Searchbar
             placeholder="Search email"
             scrollEnabled={Platform.OS === "ios" ? false : true}
@@ -177,28 +181,26 @@ const Reminder = (props) => {
             info="No user found"
           />
           <View style={styles.mTop} />
-          <Input
+          <TextInput
             scrollEnabled={false}
-            placeholderTextColor="white"
+            theme={{ colors: { primary: "#1C70CA" } }}
             placeholder="Title"
             style={styles.textBox}
             onChangeText={(value) => setTitle(value)}
-            leftIcon={{
-              type: "font-awesome",
-              color: "white",
-              name: "pencil-square"
-            }}
           />
-          <Input
+          <View style={styles.mTop} />
+          <TextInput
             multiline
             scrollEnabled={false}
-            placeholderTextColor="white"
+            theme={{ colors: { primary: "#1C70CA" } }}
             placeholder="Message"
             style={styles.textBox}
             onChangeText={(value) => setMessage(value)}
           />
+        </View>
+        <Card>
           <Button
-            buttonStyle={styles.reminderButton}
+            buttonStyle={styles.buttonBackground}
             icon={
               <Icon
                 name="calendar"
@@ -216,9 +218,10 @@ const Reminder = (props) => {
                 : "Pick Date and Time"
             }
           />
-          <View style={styles.mTop} />
+        </Card>
+        <Card>
           <Button
-            buttonStyle={styles.reminderButton}
+            buttonStyle={styles.buttonBackground}
             icon={
               <Icon
                 name="save"
@@ -231,7 +234,7 @@ const Reminder = (props) => {
             onPress={handleSave}
             title="Save"
           />
-        </View>
+        </Card>
       </ScrollView>
     </KeyboardAvoidingView>
   );

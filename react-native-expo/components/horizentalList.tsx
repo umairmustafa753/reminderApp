@@ -24,14 +24,7 @@ const HorizentalList = ({
       {users.length ? (
         <View>
           {titile && (
-            <Text
-              style={[
-                styles.textCenter,
-                styles.whiteText,
-                styles.font22,
-                styles.mTop5
-              ]}
-            >
+            <Text style={[styles.textCenter, styles.font22, styles.mTop5]}>
               {titile}
             </Text>
           )}
@@ -67,13 +60,7 @@ const HorizentalList = ({
                       src={u?.profile_picture}
                       style={styles.avatar}
                     />
-                    <Text
-                      style={[
-                        styles.textCenter,
-                        styles.whiteText,
-                        styles.mTop5
-                      ]}
-                    >
+                    <Text style={[styles.textCenter, styles.mTop5]}>
                       {`${u?.first_name} ${u?.last_name}`.length > 5
                         ? `${u?.first_name} ${u?.last_name}`?.substring(0, 5) +
                           "..."
@@ -87,11 +74,7 @@ const HorizentalList = ({
         </View>
       ) : (
         <>
-          {info && (
-            <Text style={[styles.textCenter, styles.whiteText, styles.mTop]}>
-              {info}
-            </Text>
-          )}
+          {info && <Text style={[styles.textCenter, styles.mTop]}>{info}</Text>}
         </>
       )}
     </>
