@@ -5,7 +5,8 @@ import {
   StackActions,
   useNavigation
 } from "@react-navigation/native";
-import { Header, Card, Button, Avatar } from "react-native-elements";
+import { StatusBar } from "expo-status-bar";
+import { Header, Card, Button } from "react-native-elements";
 import ActionButton from "react-native-action-button";
 import UserAvatar from "react-native-user-avatar";
 import Icon from "react-native-vector-icons/Ionicons";
@@ -63,12 +64,14 @@ const Event = () => {
 
   return (
     <ScrollView>
+      <StatusBar style="inverted" />
       <Header
         leftComponent={{
           icon: "arrow-back",
           color: "#fff",
           onPress: handleBack
         }}
+        rightComponent={{ icon: "event-note", color: "#fff" }}
       />
       <Card>
         {reminders?.length ? (
@@ -125,10 +128,7 @@ const Event = () => {
               style={styles.Mbottom20}
               renderIcon={() => {
                 return (
-                  <Icon
-                    name="ios-star-half-outline"
-                    style={styles.actionButtonIcon}
-                  />
+                  <Icon name="md-newspaper" style={styles.actionButtonIcon} />
                 );
               }}
             >

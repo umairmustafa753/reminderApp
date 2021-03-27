@@ -49,7 +49,7 @@ const Login = (props) => {
         <Loader loading={props.loading || isLoggedIn} />
       ) : (
         <View style={styles.container}>
-          <StatusBar style="light" />
+          <StatusBar style="inverted" />
           <View style={styles.logoContainer}>
             <Image
               source={require("../assets/logo.png")}

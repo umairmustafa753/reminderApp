@@ -52,6 +52,10 @@ const Dashboard = (props) => {
     });
   };
 
+  const handleNotification = () => {
+    navigator.navigate(NAVIGATIONS.NOTIFICATOIN);
+  };
+
   return (
     <>
       {props.loading ? (
@@ -78,7 +82,7 @@ const Dashboard = (props) => {
             }}
           />
           <ActionButton
-            buttonColor="rgba(231,76,60,1)"
+            buttonColor="#1C70CA"
             degrees={0}
             renderIcon={() => {
               return (
@@ -89,6 +93,16 @@ const Dashboard = (props) => {
               );
             }}
           >
+            <ActionButton.Item
+              buttonColor="#0ac993"
+              title="Notifications"
+              onPress={handleNotification}
+            >
+              <Ionicons
+                name="md-notifications"
+                style={styles.actionButtonIcon}
+              />
+            </ActionButton.Item>
             <ActionButton.Item
               buttonColor="#CA1C3B"
               title="Sign Out"
