@@ -3,5 +3,6 @@ export const NAVIGATIONS = {
   DASHBOARD: "Dashboard",
   EVENT: "Event",
   REMINDER: "Reminder",
+  NOTIFICATOIN: "Notification",
   SUCCESS: "Success"
 };

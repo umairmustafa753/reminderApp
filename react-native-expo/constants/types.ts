@@ -7,6 +7,7 @@ export type StackParamList = {
   Dashboard: undefined;
   Event: undefined;
   Reminder: undefined;
+  Notification: undefined;
   Success: undefined;
 };
 

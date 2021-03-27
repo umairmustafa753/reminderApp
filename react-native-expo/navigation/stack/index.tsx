@@ -7,6 +7,7 @@ import Dashboard from "../../screens/dashboard";
 import Reminder from "../../screens/reminder";
 import Success from "../../screens/success";
 import { StackParamList } from "../../constants/types";
+import Notification from "../../screens/notification";
 
 const Stack = createStackNavigator<StackParamList>();
 
@@ -17,15 +18,8 @@ const StackScreens = () => {
       <Stack.Screen name={"Dashboard"} component={Dashboard} />
       <Stack.Screen name={"Event"} component={Event} />
       <Stack.Screen name={"Success"} component={Success} />
-      <Stack.Screen
-        name={"Reminder"}
-        component={Reminder}
-        options={{
-          cardStyle: {
-            backgroundColor: "#118571"
-          }
-        }}
-      />
+      <Stack.Screen name={"Notification"} component={Notification} />
+      <Stack.Screen name={"Reminder"} component={Reminder} />
     </Stack.Navigator>
   );
 };
