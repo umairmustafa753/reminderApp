@@ -57,6 +57,9 @@ const styles = StyleSheet.create({
   Mbottom20: {
     marginBottom: -20
   },
+  Mbottom35: {
+    marginBottom: -35
+  },
   right10: {
     marginRight: 10
   },
@@ -77,9 +80,6 @@ const styles = StyleSheet.create({
   },
   buttonBackground: {
     backgroundColor: "#1C70CA"
-  },
-  reminderButton: {
-    backgroundColor: "#0d917a"
   },
   reminderContainer: {
     marginTop: 50,

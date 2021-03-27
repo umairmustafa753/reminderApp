@@ -16,7 +16,7 @@ const ReminderAction = {
             to: user?.push_token,
             sound: "default",
             title: `Hey ${user?.first_name} ${user?.last_name}`,
-            body: `${obj.user_name} wants to add you in a ${obj.title} reminder`
+            body: `${obj.user_name} wants to add you in a reminder named ${obj.title}`
           };
         });
         firebase
@@ -38,7 +38,7 @@ const ReminderAction = {
               content: {
                 title: `Hey ${obj.user_name}`,
                 sound: "default",
-                body: `Reminder titled ${obj.title} was set by you`
+                body: `${obj.title}`
               },
               trigger: { seconds: parseInt(obj?.seconds) }
             });
