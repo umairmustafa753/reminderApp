@@ -48,8 +48,8 @@ const styles = StyleSheet.create({
   },
   username: {
     alignSelf: "center",
-    marginLeft: 20,
-    fontSize: 20
+    marginLeft: 10,
+    fontSize: 15
   },
   bottom20: {
     marginBottom: 20
@@ -68,7 +68,14 @@ const styles = StyleSheet.create({
   },
   cardView: {
     flex: 1,
-    flexDirection: "row"
+    flexDirection: "row",
+    marginBottom: 5
+  },
+  mBottom50: {
+    marginBottom: 50
+  },
+  mBottomM80: {
+    marginBottom: -80
   },
   logoImageWithSelf: {
     width: 200,
