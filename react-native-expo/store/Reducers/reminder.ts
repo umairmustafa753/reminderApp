@@ -2,7 +2,8 @@ import ActionTypes from "../Actions/ActionTypes";
 
 const INITIAL_STATE = {
   reminder: {},
-  loading: false
+  loading: false,
+  reminders: {}
 };
 
 function reminderReducer(state = INITIAL_STATE, action) {
@@ -19,6 +20,22 @@ function reminderReducer(state = INITIAL_STATE, action) {
       return {
         ...state,
         reminder: action.payload,
+        loading: false
+      };
+    }
+
+    case ActionTypes.GET_REMINDERS_REQUST: {
+      return {
+        ...state,
+        reminders: action.payload,
+        loading: true
+      };
+    }
+
+    case ActionTypes.GET_REMINDERS: {
+      return {
+        ...state,
+        reminders: action.payload,
         loading: false
       };
     }

@@ -6,6 +6,7 @@ import ActionButton from "react-native-action-button";
 import firebase from "firebase";
 import { Ionicons } from "@expo/vector-icons";
 import { CalendarList } from "react-native-calendars";
+import moment from "moment";
 
 import { NAVIGATIONS } from "../constants/navigator";
 import ReminderAction from "../store/Actions/reminder";
@@ -19,6 +20,9 @@ const Dashboard = (props) => {
   const route = useRoute();
 
   const [user, setUser] = useState({});
+  const [reminders, setReminders] = useState({
+    dates: {}
+  });
 
   const handleSignOut = async () => {
     firebase.auth().signOut();
@@ -28,9 +32,11 @@ const Dashboard = (props) => {
   useEffect(() => {
     if (!props?.user?.email) {
       props.getUser({ uid: route?.params?.uid });
-      setUser(props.user);
     } else {
       setUser(props.user);
+      props.getReminders({
+        email: props?.user?.email
+      });
     }
   }, [props?.loading]);
 
@@ -38,6 +44,28 @@ const Dashboard = (props) => {
     pushNotification();
     props.setAddReminderSuccesFalse();
   }, []);
+
+  useEffect(() => {
+    if (props?.reminders) {
+      const datesArray = Object.keys(props?.reminders)?.map((key) =>
+        moment
+          .unix(props?.reminders[key]?.date / 1000, "YYYY-MM-DD")
+          .format("YYYY-MM-DD")
+      );
+      const datesObj = Object.assign({}, datesArray);
+      const altdates = Object.fromEntries(
+        Object.entries(datesObj).map(([key, value]) => [
+          value,
+          {
+            selected: true,
+            marked: true
+          }
+        ])
+      );
+
+      setReminders({ dates: altdates });
+    }
+  }, [props?.reminders]);
 
   const pushNotification = async () => {
     await props.registerForPushNotifications({ uid: route?.params?.uid });
@@ -74,12 +102,7 @@ const Dashboard = (props) => {
             onDayPress={(day) => {
               handleEvent(day?.dateString);
             }}
-            markedDates={{
-              "2021-03-16": {
-                selected: true,
-                marked: true
-              }
-            }}
+            markedDates={reminders?.dates}
           />
           <ActionButton
             buttonColor="#1C70CA"
@@ -123,7 +146,8 @@ const Dashboard = (props) => {
 const mapStateToProps = (state) => {
   return {
     user: state.userReducer.obj,
-    loading: state.userReducer.loading
+    loading: state.userReducer.loading,
+    reminders: state.reminderReducer.reminders
   };
 };
 
@@ -131,6 +155,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getUser: (obj) => {
       dispatch(UserAction.GetUser(obj));
+    },
+    getReminders: (obj) => {
+      dispatch(ReminderAction.GetRemidners(obj));
     },
     registerForPushNotifications: (obj) => {
       dispatch(NotificationAction.RegisterForPushNotifications(obj));

@@ -6,7 +6,9 @@ const ActionTypes = {
   PUSH_NOTIFICATIN: "pushNotification",
   REQUST_PUSH_NOTIFICATIN: "requstPushNotification",
   REMINDER: "reminder",
-  REMINDER_REQUST: "reminderRequst"
+  REMINDER_REQUST: "reminderRequst",
+  GET_REMINDERS: "getReminders",
+  GET_REMINDERS_REQUST: "getRemindesrRequst"
 };
 
 export default ActionTypes;
