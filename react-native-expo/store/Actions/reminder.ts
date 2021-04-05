@@ -15,7 +15,7 @@ const ReminderAction = {
           return {
             to: user?.push_token,
             sound: "default",
-            title: `Hey ${user?.first_name} ${user?.last_name}`,
+            title: `Hey ${user?.first_name} ${user?.last_name} Remminder Alert`,
             body: `${obj.user_name} wants to add you in a reminder named ${obj.title}`
           };
         });
@@ -36,7 +36,7 @@ const ReminderAction = {
             }
             await Notifications.scheduleNotificationAsync({
               content: {
-                title: `Hey ${obj.user_name}`,
+                title: `Hey ${obj.user_name} Remminder Alert`,
                 sound: "default",
                 body: `${obj.title}`
               },
@@ -61,12 +61,37 @@ const ReminderAction = {
       }
     };
   },
+
   SetAddReminderSuccesFalse: () => {
     return async (dispatch) => {
       dispatch({
         type: ActionTypes.REMINDER,
         payload: { success: false }
       });
+    };
+  },
+
+  GetRemidners: (obj) => {
+    return async (dispatch) => {
+      dispatch({ type: ActionTypes.GET_REMINDERS_REQUST, payload: {} });
+      try {
+        firebase
+          .database()
+          .ref("/reminders/")
+          .orderByChild("user_email")
+          .equalTo(obj?.email)
+          .on("value", (users) => {
+            dispatch({
+              type: ActionTypes.GET_REMINDERS,
+              payload: users.val()
+            });
+          });
+      } catch (e) {
+        dispatch({
+          type: ActionTypes.GET_REMINDERS,
+          payload: { message: "unable to fetch reminders" }
+        });
+      }
     };
   }
 };
