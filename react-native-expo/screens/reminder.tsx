@@ -9,7 +9,7 @@ import {
 import Icon from "react-native-vector-icons/Ionicons";
 import { connect } from "react-redux";
 import { Searchbar } from "react-native-paper";
-import { Button, Header, Card } from "react-native-elements";
+import { Button, Header } from "react-native-elements";
 import { TextInput } from "react-native-paper";
 import Spinner from "react-native-loading-spinner-overlay";
 import Toast from "react-native-toast-message";
@@ -197,8 +197,7 @@ const Reminder = (props) => {
             style={styles.textBox}
             onChangeText={(value) => setMessage(value)}
           />
-        </View>
-        <Card>
+          <View style={styles.mTop} />
           <Button
             buttonStyle={styles.buttonBackground}
             icon={
@@ -218,8 +217,7 @@ const Reminder = (props) => {
                 : "Pick Date and Time"
             }
           />
-        </Card>
-        <Card>
+          <View style={styles.mTop} />
           <Button
             buttonStyle={styles.buttonBackground}
             icon={
@@ -234,7 +232,7 @@ const Reminder = (props) => {
             onPress={handleSave}
             title="Save"
           />
-        </Card>
+        </View>
       </ScrollView>
     </KeyboardAvoidingView>
   );
